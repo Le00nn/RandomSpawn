@@ -13,13 +13,25 @@ This plugin has been tested and works with alpha 1.2.x using Project Poseidon Ub
 ### Releases
 - 1.0.0 ~ Randomly spawns players
 - 1.1.0 ~ Ability to reload configuration (config.yml) via a command (see below)
+- 1.2.0 ~ Sets spawn range in the configuration file (config.yml) via a command (see below)
 
 ### Commands
-- **/rs reload** ~ Reload the config.yml file with any changes you've made.
+All commands requires the player to be a server operator.
+
+- **/rs reload** ~ Reload the config.yml file with any changes you've made. [Added in 1.1.0]
+- **/rs set** ~ Sets spawn points in the config.yml file. [Added in 1.2.0]
+  
+#### Usage example:
+
+/rs set a -100 -100
+
+/rs set b 100 100
+
+This example will set the range of spawning between x -100 and 100 and z -100 and 100.
 
 ### Features and future plans
 - [x] Teleporting to random location
 - [x] Simple config file to use
 - [x] Reloading the config file via command [Added in 1.1.0]
-- [ ] Commands to configure the spawn area
+- [x] Commands to configure the spawn area
 - [ ] Blacklist/Whitelist of what blocks you can spawn or not spawn on
