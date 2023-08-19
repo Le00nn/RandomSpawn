@@ -1,6 +1,6 @@
 // Author: Le00nn
 // Date: 19/08/2023
-// Version: 1.2.0
+// Version: 1.2.1
 
 package se.le00nn.randomtp;
 
@@ -50,7 +50,7 @@ public class RandomTP extends JavaPlugin implements Listener {
 			// Player command.
 			
 			// /rs
-			if(c.equals("rs")) {
+			if(c.matches("rs")) {
 				if(args[0] == null || args.length <= 0) return false;
 							
 				// rs reload
@@ -66,17 +66,33 @@ public class RandomTP extends JavaPlugin implements Listener {
 				// rs set 
 				if(args[0].toString().matches("set")) {
 					if(args[3] == null || args.length <= 3) return false;
-					// rs set a 
-					// rs set a x z
-					if(args[1] == "a") {
-						if(args[2].matches("[0-9]+")) getConfiguration().setProperty("location.a.x", Integer.parseInt(args[2])); // rs set a x ?
-						if(args[3].matches("[0-9]+")) getConfiguration().setProperty("location.a.z", Integer.parseInt(args[3])); // rs set a ? z
+					// rs set x 
+					// rs set x x1 x2
+					if(args[1].toLowerCase().equals("x")) {
+						if(args[2].matches("[0-9]+")) {
+							getConfiguration().setProperty("location.a.x", Integer.parseInt(args[2])); // rs set x x1 ?
+						} else {
+							Bukkit.getLogger().severe("["+getName(this)+"] Positions must be a valid number.");
+						}
+						if(args[3].matches("[0-9]+")) {
+							getConfiguration().setProperty("location.b.x", Integer.parseInt(args[3])); // rs set x ? x2
+						} else {
+							Bukkit.getLogger().severe("["+getName(this)+"] Positions must be a valid number.");
+						}
 					}
-					// rs set b 
-					// rs set b x z
-					if(args[1] == "b") {
-						if(args[2].matches("[0-9]+")) getConfiguration().setProperty("location.b.x", Integer.parseInt(args[2])); // rs set b x ?
-						if(args[3].matches("[0-9]+")) getConfiguration().setProperty("location.b.z", Integer.parseInt(args[3])); // rs set b ? z
+					// rs set z 
+					// rs set z z1 z2
+					if(args[1].toLowerCase().equals("z")) {
+						if(args[2].matches("[0-9]+")) {
+							getConfiguration().setProperty("location.a.z", Integer.parseInt(args[2])); // rs set z z1 ?
+						} else {
+							Bukkit.getLogger().severe("["+getName(this)+"] Positions must be a valid number.");
+						}
+						if(args[3].matches("[0-9]+")) {
+							getConfiguration().setProperty("location.b.z", Integer.parseInt(args[3])); // rs set z ? z2
+						} else {
+							Bukkit.getLogger().severe("["+getName(this)+"] Positions must be a valid number.");
+						}
 					}
 					Bukkit.getLogger().info("["+getName(this)+"] CONSOLE: Updated configuration file.");
 					getConfiguration().save();
@@ -98,7 +114,7 @@ public class RandomTP extends JavaPlugin implements Listener {
 			}
 			
 			// /rs
-			if(c.equals("rs")) {
+			if(c.matches("rs")) {
 				if(args[0] == null || args.length <= 0) return false;
 				
 				// /rs reload
@@ -115,17 +131,33 @@ public class RandomTP extends JavaPlugin implements Listener {
 				// /rs set 
 				if(args[0].toString().matches("set")) {
 					if(args[3] == null || args.length <= 3) return false;
-					// /rs set a 
-					// /rs set a x z
-					if(args[1] == "a") {
-						if(args[2].matches("[0-9]+")) getConfiguration().setProperty("location.a.x", Integer.parseInt(args[2])); // rs set a x ?
-						if(args[3].matches("[0-9]+")) getConfiguration().setProperty("location.a.z", Integer.parseInt(args[3])); // rs set a ? z
+					// /rs set x 
+					// /rs set x x1 x2
+					if(args[1].toLowerCase().equals("x")) {
+						if(args[2].toString().matches("[0-9]+")) {
+							getConfiguration().setProperty("location.a.x", Integer.parseInt(args[2])); // /rs set x x1 ?
+						} else {
+							player.sendMessage(ChatColor.RED + "Positions must be a valid number.");
+						}
+						if(args[3].toString().matches("[0-9]+")) {
+							getConfiguration().setProperty("location.b.x", Integer.parseInt(args[3])); // /rs set x ? x2
+						} else {
+							player.sendMessage(ChatColor.RED + "Positions must be a valid number.");
+						}
 					}
-					// /rs set b 
-					// /rs set b x z
-					if(args[1] == "b") {
-						if(args[2].matches("[0-9]+")) getConfiguration().setProperty("location.b.x", Integer.parseInt(args[2])); // rs set b x ?
-						if(args[3].matches("[0-9]+")) getConfiguration().setProperty("location.b.z", Integer.parseInt(args[3])); // rs set b ? z
+					// /rs set z 
+					// /rs set z z1 z2
+					if(args[1].toLowerCase().equals("z")) {
+						if(args[2].toString().matches("[0-9]+")) {
+							getConfiguration().setProperty("location.a.z", Integer.parseInt(args[2])); // /rs set z z1 ?
+						} else {
+							player.sendMessage(ChatColor.RED + "Positions must be a valid number.");
+						}
+						if(args[3].toString().matches("[0-9]+")) {
+							getConfiguration().setProperty("location.b.z", Integer.parseInt(args[3])); // /rs set z ? z2
+						} else {
+							player.sendMessage(ChatColor.RED + "Positions must be a valid number.");
+						}
 					}
 					Bukkit.getLogger().info("["+getName(this)+"] Updated configuration file.");
 					getConfiguration().save();
@@ -136,11 +168,9 @@ public class RandomTP extends JavaPlugin implements Listener {
 						if(player1.isOp()) player1.sendMessage(ChatColor.LIGHT_PURPLE + "(CONSOLE) Updated and reloaded RandomSpawn configuration file.");
 					}
 					return false;
-				}
-				
+				}	
 			}
 		}
-		
 		return false;
 	}
 	
