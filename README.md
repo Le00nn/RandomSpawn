@@ -34,5 +34,5 @@ This example will set the range of spawning between x -100 and 100 and z -100 an
 - [x] Teleporting to random location
 - [x] Simple config file to use
 - [x] Reloading the config file via command [Added in 1.1.0]
-- [x] Commands to configure the spawn area
+- [x] Commands to configure the spawn area [Added in 1.2.0, fixed in 1.2.1]
 - [ ] Blacklist/Whitelist of what blocks you can spawn or not spawn on
