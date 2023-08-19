@@ -1,12 +1,15 @@
 // Author: Le00nn
 // Date: 19/08/2023
-// Version: 1.0.0
+// Version: 1.1.0
 
 package se.le00nn.randomtp;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,6 +43,50 @@ public class RandomTP extends JavaPlugin implements Listener {
 			getConfiguration().setProperty("location.b.z", 500);
 			getConfiguration().save();
 		}
+	}
+	
+	public boolean onCommand(CommandSender sender, Command cmd, String c, String[] args) {
+		if(!(sender instanceof Player)) {
+			// Player command.
+			
+			// /rs
+			if(c.equals("rs")) {
+				if(args[0] == null || args.length <= 0) return false;
+							
+				// /rs reload
+				if(args[0].toString().matches("reload")) {
+					Bukkit.getLogger().info("["+getName(this)+"] CONSOLE: Reloaded configuration file.");
+					for(Player player : Bukkit.getOnlinePlayers()) {
+						if(player.isOp()) player.sendMessage(ChatColor.LIGHT_PURPLE + "(CONSOLE) Reloaded RandomSpawn configuration file.");
+					}
+					getConfiguration().load();
+					return false;
+				}
+			}
+		} else {
+			// Player command
+			
+			Player player = (Player)sender;
+			if(player.isOp() != true) {
+				player.sendMessage(ChatColor.RED + "You are not operator.");
+				return false;
+			}
+			
+			// /rs
+			if(c.equals("rs")) {
+				if(args[0] == null || args.length <= 0) return false;
+				
+				// /rs reload
+				if(args[0].toString().matches("reload")) {
+					Bukkit.getLogger().info("["+getName(this)+"] Reloaded configuration file.");
+					player.sendMessage(ChatColor.GREEN + "Reloaded RandomSpawn configuration file.");
+					getConfiguration().load();
+					return false;
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	@EventHandler
@@ -101,7 +148,7 @@ public class RandomTP extends JavaPlugin implements Listener {
 			
 		// Config version
 		private int getConfigVersion() {
-			return 1000; // First version of Config version.
+			return 1001; // First version of Config version.
 		}
 
 }
