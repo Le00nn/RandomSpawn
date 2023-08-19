@@ -1,6 +1,6 @@
 // Author: Le00nn
 // Date: 19/08/2023
-// Version: 1.1.0
+// Version: 1.2.0
 
 package se.le00nn.randomtp;
 
@@ -53,13 +53,38 @@ public class RandomTP extends JavaPlugin implements Listener {
 			if(c.equals("rs")) {
 				if(args[0] == null || args.length <= 0) return false;
 							
-				// /rs reload
+				// rs reload
 				if(args[0].toString().matches("reload")) {
 					Bukkit.getLogger().info("["+getName(this)+"] CONSOLE: Reloaded configuration file.");
+					getConfiguration().load();
 					for(Player player : Bukkit.getOnlinePlayers()) {
 						if(player.isOp()) player.sendMessage(ChatColor.LIGHT_PURPLE + "(CONSOLE) Reloaded RandomSpawn configuration file.");
 					}
+					return false;
+				}
+				
+				// rs set 
+				if(args[0].toString().matches("set")) {
+					if(args[3] == null || args.length <= 3) return false;
+					// rs set a 
+					// rs set a x z
+					if(args[1] == "a") {
+						if(args[2].matches("[0-9]+")) getConfiguration().setProperty("location.a.x", Integer.parseInt(args[2])); // rs set a x ?
+						if(args[3].matches("[0-9]+")) getConfiguration().setProperty("location.a.z", Integer.parseInt(args[3])); // rs set a ? z
+					}
+					// rs set b 
+					// rs set b x z
+					if(args[1] == "b") {
+						if(args[2].matches("[0-9]+")) getConfiguration().setProperty("location.b.x", Integer.parseInt(args[2])); // rs set b x ?
+						if(args[3].matches("[0-9]+")) getConfiguration().setProperty("location.b.z", Integer.parseInt(args[3])); // rs set b ? z
+					}
+					Bukkit.getLogger().info("["+getName(this)+"] CONSOLE: Updated configuration file.");
+					getConfiguration().save();
+					Bukkit.getLogger().info("["+getName(this)+"] CONSOLE: Reloaded configuration file.");
 					getConfiguration().load();
+					for(Player player : Bukkit.getOnlinePlayers()) {
+						if(player.isOp()) player.sendMessage(ChatColor.LIGHT_PURPLE + "(CONSOLE) Updated and reloaded RandomSpawn configuration file.");
+					}
 					return false;
 				}
 			}
@@ -80,9 +105,39 @@ public class RandomTP extends JavaPlugin implements Listener {
 				if(args[0].toString().matches("reload")) {
 					Bukkit.getLogger().info("["+getName(this)+"] Reloaded configuration file.");
 					player.sendMessage(ChatColor.GREEN + "Reloaded RandomSpawn configuration file.");
+					for(Player player1 : Bukkit.getOnlinePlayers()) {
+						if(player1.isOp()) player.sendMessage(ChatColor.LIGHT_PURPLE + "(CONSOLE) Reloaded RandomSpawn configuration file.");
+					}
 					getConfiguration().load();
 					return false;
 				}
+				
+				// /rs set 
+				if(args[0].toString().matches("set")) {
+					if(args[3] == null || args.length <= 3) return false;
+					// /rs set a 
+					// /rs set a x z
+					if(args[1] == "a") {
+						if(args[2].matches("[0-9]+")) getConfiguration().setProperty("location.a.x", Integer.parseInt(args[2])); // rs set a x ?
+						if(args[3].matches("[0-9]+")) getConfiguration().setProperty("location.a.z", Integer.parseInt(args[3])); // rs set a ? z
+					}
+					// /rs set b 
+					// /rs set b x z
+					if(args[1] == "b") {
+						if(args[2].matches("[0-9]+")) getConfiguration().setProperty("location.b.x", Integer.parseInt(args[2])); // rs set b x ?
+						if(args[3].matches("[0-9]+")) getConfiguration().setProperty("location.b.z", Integer.parseInt(args[3])); // rs set b ? z
+					}
+					Bukkit.getLogger().info("["+getName(this)+"] Updated configuration file.");
+					getConfiguration().save();
+					Bukkit.getLogger().info("["+getName(this)+"] Reloaded configuration file.");
+					getConfiguration().load();
+					player.sendMessage(ChatColor.GREEN + "Updated RandomSpawn configuration file.");
+					for(Player player1 : Bukkit.getOnlinePlayers()) {
+						if(player1.isOp()) player1.sendMessage(ChatColor.LIGHT_PURPLE + "(CONSOLE) Updated and reloaded RandomSpawn configuration file.");
+					}
+					return false;
+				}
+				
 			}
 		}
 		
@@ -137,18 +192,18 @@ public class RandomTP extends JavaPlugin implements Listener {
 	}
 	
 	// Get plugin name
-		private String getName(RandomTP rtp) {
-			return rtp.getDescription().getName();
-		}
+	private String getName(RandomTP rtp) {
+		return rtp.getDescription().getName();
+	}
 			
-		// Get plugion version
-		private String getVersion(RandomTP rtp) {
-			return rtp.getDescription().getVersion();
-		}
+	// Get plugion version
+	private String getVersion(RandomTP rtp) {
+		return rtp.getDescription().getVersion();
+	}
 			
-		// Config version
-		private int getConfigVersion() {
-			return 1001; // First version of Config version.
-		}
+	// Config version
+	private int getConfigVersion() {
+		return 1002; // First version of Config version.
+	}
 
 }
