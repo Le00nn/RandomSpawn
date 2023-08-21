@@ -1,8 +1,8 @@
 main: se.le00nn.randomtp.RandomTP
-version: 1.2.1
+version: 1.2.2
 name: RandomSpawn
 author: Le00nn
-description: Spawns a player in a random area in a range set a config file.
+description: Spawns a player in a random area in a range set in a config file.
 commands:
     rs:
-        description: Used for reloading config.yml file.
+        description: Used for configuring and reloading the config.yml file.
