@@ -15,6 +15,7 @@ This plugin has been tested and works with alpha 1.2.x using Project Poseidon Ub
 - 1.1.0 ~ Ability to reload configuration (config.yml) via a command (see below)
 - 1.2.0 [BROKEN] ~ Sets spawn range in the configuration file (config.yml) via a command (see below)
 - 1.2.1 ~ Changed + fixed command added in 1.2.0
+- 1.2.2 ~ Fixed respawns upon death not being the one you got when joining server.
 
 ### Commands
 All commands requires the player to be a server operator.
