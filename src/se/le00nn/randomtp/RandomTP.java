@@ -198,7 +198,7 @@ public class RandomTP extends JavaPlugin implements Listener {
 		String pos = getConfiguration().getString("spawns."+plname);
 		if(pos != null) {
 			Location loc = reloadSpawn(pos, player, plname);
-			e.setRespawnLocation(loc);
+			if(e.getRespawnLocation() != loc) e.setRespawnLocation(loc);
 		}
 		return;
 	}
