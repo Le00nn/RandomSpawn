@@ -1,6 +1,6 @@
 // Author: Le00nn
-// Date: 19/08/2023
-// Version: 1.2.1
+// Date: 21/08/2023
+// Version: 1.2.2
 
 package se.le00nn.randomtp;
 
@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class RandomTP extends JavaPlugin implements Listener {
@@ -26,7 +27,6 @@ public class RandomTP extends JavaPlugin implements Listener {
 	@Override
 	public void onEnable() {
 		Bukkit.getLogger().info("["+getName(this)+"] (Version: "+getVersion(this)+") enabled!"); // Plugin enabled!
-		
 		getServer().getPluginManager().registerEvents(this, this);
 		Bukkit.getLogger().info("["+getName(this)+"] Registered events!");
 		
@@ -47,7 +47,7 @@ public class RandomTP extends JavaPlugin implements Listener {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String c, String[] args) {
 		if(!(sender instanceof Player)) {
-			// Player command.
+			// Console command.
 			
 			// /rs
 			if(c.matches("rs")) {
@@ -176,17 +176,46 @@ public class RandomTP extends JavaPlugin implements Listener {
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
+		getConfiguration().load();
 		Player player = e.getPlayer();
 		String plname = player.getName();
-		
 		Location loc = calculatePosition(player, plname);
-		if(loc != null) player.teleport(loc);
+		if(loc != null) {
+			String pos = loc.getX()+","+loc.getY()+","+loc.getZ();
+			getConfiguration().setProperty("spawns."+plname, pos);
+			getConfiguration().save();
+			player.teleport(loc);
+		}
 		
 		return;
 	}
 	
+	@EventHandler
+	public void onPlayerRespawn(PlayerRespawnEvent e) {
+		getConfiguration().load();
+		Player player = e.getPlayer();
+		String plname = player.getName();
+		String pos = getConfiguration().getString("spawns."+plname);
+		if(pos != null) {
+			Location loc = reloadSpawn(pos, player, plname);
+			e.setRespawnLocation(loc);
+		}
+		return;
+	}
+	
+	// Reload position to respawn.
+	private Location reloadSpawn(String pos, Player player, String plname) {
+		getConfiguration().load();
+		String[] posi = pos.split(",");
+		World world = player.getWorld();
+		Location loc = new Location(world, Double.parseDouble(posi[0]), Double.parseDouble(posi[1]), Double.parseDouble(posi[2]));
+		Bukkit.getLogger().info("["+getName(this)+"] Player '" + plname + "' just died and respawned at " + posi[0] + ", " + posi[1] + ", " + posi[2] + "... Magic!");
+		return loc;
+		}
+	
 	// Calculate position to teleport to on first join.
 	private Location calculatePosition(Player player, String plname) {
+		getConfiguration().load();
 		if(getConfiguration().getProperty("location.hastp."+plname) != null) return null; // Prevent teleport of previously spawned players.
 		
 		int ax = (int)getConfiguration().getProperty("location.a.x");
@@ -216,8 +245,6 @@ public class RandomTP extends JavaPlugin implements Listener {
 		Location loc = new Location(world, spawnx, spawny, spawnz);
 		getConfiguration().setProperty("location.hastp."+plname, true);	// Memory of previous players who first joined to not randomly tp them everytime they join.
 		getConfiguration().save();
-		Bukkit.getLogger().info("["+getName(this)+"] Player '" + plname + "' joined and got teleported to " + spawnx + ", " + spawny + ", " + spawnz + "... Magic!");
-		
 		return loc;
 	}
 	
