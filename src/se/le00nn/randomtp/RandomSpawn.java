@@ -337,7 +337,7 @@ public class RandomSpawn extends JavaPlugin implements Listener {
 			
 	// Config version
 	private int getConfigVersion() {
-		return 1002; // First version of Config version.
+		return 1003;
 	}
 
 }
