@@ -35,12 +35,20 @@
 
 ### Config
 
-`config` Contains configuration information.
+`config` - Contains configuration information.
 
 `config.version` - The current configuration version (1003).
 
+### Settings
+
+`settings` - Contains plugins settings.
+
+`settings.spawns` - Contains settings related to spawns.
+
+`settings.spawns.allowWater` - Setting to disable or enable players spawning in water. false = no water spawns, true = allow water spawns (Default: false).
+
 ### Spawns
 
-`spawns` Contains a list of all players that have previously spawned in.
+`spawns` - Contains a list of all players that have previously spawned in.
 
-`spawns.*` * represents a player and it will contains their spawn coords set by this plugin.
+`spawns.*` - * represents a player and it will contains their spawn coords set by this plugin.
