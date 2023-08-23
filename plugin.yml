@@ -1,5 +1,5 @@
-main: se.le00nn.randomtp.RandomTP
-version: 1.2.2
+main: se.le00nn.randomtp.RandomSpawn
+version: 1.3.0
 name: RandomSpawn
 author: Le00nn
 description: Spawns a player in a random area in a range set in a config file.
