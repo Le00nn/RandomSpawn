@@ -11,6 +11,9 @@
             z: 500
     config:
         version: 1003
+    settings:
+        spawns:
+            allowWater: false
     spawns:
         TestPlayer: -361.7,65.0,442.3
         Le00nn: 153.7,74.0,-178.3
