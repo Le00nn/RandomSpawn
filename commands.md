@@ -5,6 +5,9 @@
 ### /rs reload
 Reloads the config.yml file, takes no parameters.
 
+### /rs recreate
+Recreates the default config.yml file, takes no parameters.
+
 ### /rs set
 Sets a range of positions (X and Z coordinates) of which you can spawn in.
 
@@ -23,6 +26,3 @@ Examples:
     This will spawn the player randomly between x 200 and 400.
 
 **WARNING:** Failure to set the positions x and z correctly may result in error and plugin ignoring putting players at the random spawn.
-
-### /rs recreate
-Recreates the default config.yml file, takes no parameters.
